@@ -8,19 +8,19 @@
 #
 # Params:
 #   Mandatory:
-#       GRAPHITE - The graphite server to send metrics to
-#       ELASTICSEARCH_ADDR - The elasticsearch cluster to monitor
+#       ES2GRAPHITE_GRAPHITE - The graphite server to send metrics to
+#       ES2GRAPHITE_ELASTICSEARCH_ADDR - The elasticsearch cluster to monitor
 #
 #   Optional:
-#       ELASTICSEARCH_PROTOCOL: http or https. Defaults to http.
-#       ELASTICSEARCH_USER_NAME: Elasticsearch user name to use for basic auth
-#       ELASTICSEARCH_PASSWORD: Elasticsearch password to use for basic auth
-#       GRAPHITE_PREFIX - The prefix under graphite the metrics should be placed in (Default: Elasticsearch)
-#       GRAPHITE_PROTOCOL - The protocol used to send data to graphite (Default: pickle. Can be either pickle or plaintext)
-#       GRAPHITE_PORT - Graphite port (Default: 2004)
-#       INTERVAL_SECONDS - The sample interval (Default: 10)
-#       BULK_SIZE - The amount of metrics to be sent in each bulk request (Default: 50)
-#       MAX_RETRY_BULK - The number of repeated attempts to send a bulk upon IOError failure (Default: 3)
+#       ES2GRAPHITE_ELASTICSEARCH_PROTOCOL: http or https. Defaults to http.
+#       ES2GRAPHITE_ELASTICSEARCH_USER_NAME: Elasticsearch user name to use for basic auth
+#       ES2GRAPHITE_ELASTICSEARCH_PASSWORD: Elasticsearch password to use for basic auth
+#       ES2GRAPHITE_GRAPHITE_PREFIX - The prefix under graphite the metrics should be placed in (Default: Elasticsearch)
+#       ES2GRAPHITE_GRAPHITE_PROTOCOL - The protocol used to send data to graphite (Default: pickle. Can be either pickle or plaintext)
+#       ES2GRAPHITE_GRAPHITE_PORT - Graphite port (Default: 2004)
+#       ES2GRAPHITE_INTERVAL_SECONDS - The sample interval (Default: 10)
+#       ES2GRAPHITE_BULK_SIZE - The amount of metrics to be sent in each bulk request (Default: 50)
+#       ES2GRAPHITE_MAX_RETRY_BULK - The number of repeated attempts to send a bulk upon IOError failure (Default: 3)
 
 
 import os
@@ -34,27 +34,27 @@ from time import sleep, time
 import requests
 
 # Get mandatory variables
-elasticsearchAddr = os.getenv('ELASTICSEARCH_ADDR')
-graphite = os.getenv('GRAPHITE')
+elasticsearchAddr = os.getenv('ES2GRAPHITE_ELASTICSEARCH_ADDR')
+graphite = os.getenv('ES2GRAPHITE_GRAPHITE')
 
 # Gets optional variables
-elasticsearch_port = os.getenv('ELASTICSEARCH_PORT', '9200')
-elasticsearch_protocol = os.getenv('ELASTICSEARCH_PROTOCOL', 'http').lower()
-elasticsearch_user_name = os.getenv('ELASTICSEARCH_USER_NAME', '')
-elasticsearch_password = os.getenv('ELASTICSEARCH_PASSWORD', '')
-graphite_prefix = os.getenv('GRAPHITE_PREFIX', "Elasticsearch")
-graphite_port = os.getenv('GRAPHITE_PORT', '2004')
-graphite_protocol = os.getenv('GRAPHITE_PROTOCOL', 'pickle')
-interval = os.getenv('INTERVAL_SECONDS', 10)
-bulk_size = os.getenv('BULK_SIZE', 50)
-max_retry_bulk = os.getenv('MAX_RETRY_BULK', 3)
+elasticsearch_port = os.getenv('ES2GRAPHITE_ELASTICSEARCH_PORT', '9200')
+elasticsearch_protocol = os.getenv('ES2GRAPHITE_ELASTICSEARCH_PROTOCOL', 'http').lower()
+elasticsearch_user_name = os.getenv('ES2GRAPHITE_ELASTICSEARCH_USER_NAME', '')
+elasticsearch_password = os.getenv('ES2GRAPHITE_ELASTICSEARCH_PASSWORD', '')
+graphite_prefix = os.getenv('ES2GRAPHITE_GRAPHITE_PREFIX', "Elasticsearch")
+graphite_port = os.getenv('ES2GRAPHITE_GRAPHITE_PORT', '2004')
+graphite_protocol = os.getenv('ES2GRAPHITE_GRAPHITE_PROTOCOL', 'pickle')
+interval = os.getenv('ES2GRAPHITE_INTERVAL_SECONDS', 10)
+bulk_size = os.getenv('ES2GRAPHITE_BULK_SIZE', 50)
+max_retry_bulk = os.getenv('ES2GRAPHITE_MAX_RETRY_BULK', 3)
 
 
 # Check if both mandatory are set
 if not all([elasticsearchAddr, graphite]):
     print ("#############################################################################################")
     print ("You must supply your ElasticSearch ip/hostname and Graphite server")
-    print ("docker run .... -e ELASTICSEARCH_ADDR=<Elasticsearch Address> -e GRAPHITE=<Graphite address>....")
+    print ("docker run .... -e ES2GRAPHITE_ELASTICSEARCH_ADDR=<Elasticsearch Address> -e ES2GRAPHITE_GRAPHITE=<Graphite address>....")
     print ("#############################################################################################")
 
     sys.exit(1)

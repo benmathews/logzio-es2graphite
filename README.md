@@ -10,18 +10,18 @@ The following parameters need to be passed as environment variables to the conta
 
 |Name|Description|Mandatory|Default| 
 |---|---|---|---|
-|ELASTICSEARCH_ADDR|Your Elasticsearch cluster address to monitor (preferably, the ip/hostname of one of your client nodes) - the protocol and port are not required|Yes|-|
-|GRAPHITE|The graphite server the metrics should end up in|Yes|-|
-|ELASTICSEARCH_PROTOCOL|http or https. Upper or lower case are acceptable. Typos arre knot.|No|http| 
-|ELASTICSEARCH_PORT|Port number (usually 9200)|No|9200| 
-|ELASTICSEARCH_USER_NAME|Username for basic auth|No|| 
-|ELASTICSEARCH_PASSWORD|Password for basic auth|No||
-|GRAPHITE_PREFIX|The prefix under graphite you want your metrics in. We will add the cluster name, and the node name after that|No|Elasticsearch|
-|GRAPHITE_PROTOCOL|Graphite protocol. Allowed values are 'pickle' or 'plaintext'|No|pickle|
-|GRAPHITE_PORT|Graphite port|No|2004|
-|INTERVAL_SECONDS|The frequency in which Elasticsearch is to be sampled (preferably, the same value as your graphite configured metrics interval)|No|10|
-|BULK_SIZE|The amount of metrics to be sent in each bulk request|No|50|
-|MAX_RETRY_BULK|The number of repeated attempts to send a bulk that failed on IOError (originated from graphite)|No|3|
+|ES2GRAPHITE_ELASTICSEARCH_ADDR|Your Elasticsearch cluster address to monitor (preferably, the ip/hostname of one of your client nodes) - the protocol and port are not required|Yes|-|
+|ES2GRAPHITE_GRAPHITE|The graphite server the metrics should end up in|Yes|-|
+|ES2GRAPHITE_ELASTICSEARCH_PROTOCOL|http or https. Upper or lower case are acceptable. Typos arre knot.|No|http| 
+|ES2GRAPHITE_ELASTICSEARCH_PORT|Port number (usually 9200)|No|9200| 
+|ES2GRAPHITE_ELASTICSEARCH_USER_NAME|Username for basic auth|No|| 
+|ES2GRAPHITE_ELASTICSEARCH_PASSWORD|Password for basic auth|No||
+|ES2GRAPHITE_GRAPHITE_PREFIX|The prefix under graphite you want your metrics in. We will add the cluster name, and the node name after that|No|Elasticsearch|
+|ES2GRAPHITE_GRAPHITE_PROTOCOL|Graphite protocol. Allowed values are 'pickle' or 'plaintext'|No|pickle|
+|ES2GRAPHITE_GRAPHITE_PORT|Graphite port|No|2004|
+|ES2GRAPHITE_INTERVAL_SECONDS|The frequency in which Elasticsearch is to be sampled (preferably, the same value as your graphite configured metrics interval)|No|10|
+|ES2GRAPHITE_BULK_SIZE|The amount of metrics to be sent in each bulk request|No|50|
+|ES2GRAPHITE_MAX_RETRY_BULK|The number of repeated attempts to send a bulk that failed on IOError (originated from graphite)|No|3|
 
 
 ## Path in graphite
@@ -34,14 +34,14 @@ Elasticsearch.prefix.MY_ES_CLUSTER.node1.jvm.mem.heap_used_percent
 ## Run Examples
 ```bash
 docker run --restart=always -d --name="es2graphite" \
-                        -e ELASTICSEARCH_ADDR="es-client.internal.domain.example" \
-                        -e GRAPHITE="graphite.internal.domain.example" \
-                        -e ELASTICSEARCH_PROTOCOL="https" \
-                        -e ELASTICSEARCH_USER_NAME="mahUser" \
-                        -e ELASTICSEARCH_PASSWORD="mahPassword" 
-                        -e GRAPHITE_PREFIX="PROD.Elasticsearch" \
-                        -e INTERVAL_SECONDS=20 \
-                        -e BULK_SIZE=10 \
+                        -e ES2GRAPHITE_ELASTICSEARCH_ADDR="es-client.internal.domain.example" \
+                        -e ES2GRAPHITE_GRAPHITE="graphite.internal.domain.example" \
+                        -e ES2GRAPHITE_ELASTICSEARCH_PROTOCOL="https" \
+                        -e ES2GRAPHITE_ELASTICSEARCH_USER_NAME="mahUser" \
+                        -e ES2GRAPHITE_ELASTICSEARCH_PASSWORD="mahPassword" 
+                        -e ES2GRAPHITE_GRAPHITE_PREFIX="PROD.Elasticsearch" \
+                        -e ES2GRAPHITE_INTERVAL_SECONDS=20 \
+                        -e ES2GRAPHITE_BULK_SIZE=10 \
                         logzio/es2graphite
 ```
 
